@@ -9,7 +9,7 @@ const Loader = () => {
         alt="Loading..." 
         className="w-48 h-48 animate-bounce" 
       />
-      <p className="mt-4 text-lg font-semibold text-gray-700">Generating your audio, please wait...</p>
+      <p className="mt-4 text-lg font-semibold text-gray-700">Magic Happening, please wait...</p>
     </div>
   );
 };
