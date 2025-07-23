@@ -1,17 +1,39 @@
-import {createContext, useState} from "react";
+// src/context/AppContext.jsx
 
-export const AppContext = createContext()
+import React, { createContext, useEffect, useState } from "react";
 
-const AppContextProvider = (props)=>{
-    const [user, setUser] = useState({ name: 'GreatStack' });
+export const AppContext = createContext();
 
-    const value = {
-        user, setUser
+export const AppProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    const storedToken = sessionStorage.getItem("token");
+    if (storedUser && storedToken) {
+      setUser(JSON.parse(storedUser));
+      setToken(storedToken);
     }
-    return (
-        <AppContext.Provider value={value}>
-            {props.children}
-        </AppContext.Provider>
-    )
-}
-export default AppContextProvider
+  }, []);
+
+  const login = (userData, tokenValue) => {
+    sessionStorage.setItem("user", JSON.stringify(userData));
+    sessionStorage.setItem("token", tokenValue);
+    setUser(userData);
+    setToken(tokenValue);
+  };
+
+  const logout = () => {
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    setUser(null);
+    setToken(null);
+  };
+
+  return (
+    <AppContext.Provider value={{ user, token, login, logout }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
