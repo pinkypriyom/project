@@ -1,15 +1,17 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './index.css';
 
-import { createRoot } from 'react-dom/client'
-import{BrowserRouter}from 'react-router-dom'
-import AppContextProvider from './context/AppContext.jsx'
+import { AppProvider } from './context/AppContext';
+import { BrowserRouter } from 'react-router-dom'; // ✅ Import this
 
-import './index.css'
-import App from './App.jsx'
-
-createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-      <AppContextProvider>
-          <App />
-      </AppContextProvider>
-  </BrowserRouter>
-)
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <BrowserRouter>       {/* ✅ Wrap with Router */}
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+);
